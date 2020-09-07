@@ -31,9 +31,10 @@ public class SkuDetails {
     private final String mTitle;
     private final String mDescription;
     private final String mJson;
+    private final String subscriptionPeriod;
 
     public SkuDetails(String jsonSkuDetails) throws JSONException {
-        this(IabHelper.ITEM_TYPE_INAPP, jsonSkuDetails);
+        this(IabHelper.ITEM_TYPE_SUBS, jsonSkuDetails);
     }
 
     public SkuDetails(String itemType, String jsonSkuDetails) throws JSONException {
@@ -49,6 +50,8 @@ public class SkuDetails {
         mPriceCurrencyCode = o.optString("price_currency_code");
         mTitle = o.optString("title");
         mDescription = o.optString("description");
+        // TODO: Averiguar cual es la key para subscriptionPeriod
+        subscriptionPeriod = o.optString("subscriptionPeriod");
     }
 
     public String getSku() {
@@ -87,4 +90,9 @@ public class SkuDetails {
     public String getJsonSkuDetails() {
         return mJson;
     }
+
+    public String getSubscriptionPeriod() {
+        return subscriptionPeriod;
+    }
+
 }

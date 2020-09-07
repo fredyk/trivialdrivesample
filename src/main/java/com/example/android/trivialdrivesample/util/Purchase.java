@@ -15,13 +15,16 @@
 
 package com.example.android.trivialdrivesample.util;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Represents an in-app billing purchase.
  */
-public class Purchase {
+public class Purchase implements Parcelable {
     String mItemType;  // ITEM_TYPE_INAPP or ITEM_TYPE_SUBS
     String mOrderId;
     String mPackageName;
@@ -48,6 +51,52 @@ public class Purchase {
         mIsAutoRenewing = o.optBoolean("autoRenewing");
         mSignature = signature;
     }
+
+    protected Purchase(Parcel in) {
+        mItemType = in.readString();
+        mOrderId = in.readString();
+        mPackageName = in.readString();
+        mSku = in.readString();
+        mPurchaseTime = in.readLong();
+        mPurchaseState = in.readInt();
+        mDeveloperPayload = in.readString();
+        mToken = in.readString();
+        mOriginalJson = in.readString();
+        mSignature = in.readString();
+        mIsAutoRenewing = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mItemType);
+        dest.writeString(mOrderId);
+        dest.writeString(mPackageName);
+        dest.writeString(mSku);
+        dest.writeLong(mPurchaseTime);
+        dest.writeInt(mPurchaseState);
+        dest.writeString(mDeveloperPayload);
+        dest.writeString(mToken);
+        dest.writeString(mOriginalJson);
+        dest.writeString(mSignature);
+        dest.writeByte((byte) (mIsAutoRenewing ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Purchase> CREATOR = new Creator<Purchase>() {
+        @Override
+        public Purchase createFromParcel(Parcel in) {
+            return new Purchase(in);
+        }
+
+        @Override
+        public Purchase[] newArray(int size) {
+            return new Purchase[size];
+        }
+    };
 
     public String getItemType() {
         return mItemType;
