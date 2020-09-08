@@ -50,7 +50,6 @@ public class SkuDetails {
         mPriceCurrencyCode = o.optString("price_currency_code");
         mTitle = o.optString("title");
         mDescription = o.optString("description");
-        // TODO: Averiguar cual es la key para subscriptionPeriod
         subscriptionPeriod = o.optString("subscriptionPeriod");
     }
 
