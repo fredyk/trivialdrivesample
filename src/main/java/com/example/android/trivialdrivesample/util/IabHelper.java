@@ -322,7 +322,7 @@ public abstract class IabHelper {
             mContext.bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
         } else {
             // no service available to handle that Intent
-            logDebug(String.format("no billing service available %s", intentServices));
+            logDebug(String.format(java.util.Locale.getDefault(), "no billing service available %s", intentServices));
             if (listener != null) {
                 listener.onIabSetupFinished(
                         new IabResult(BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE,
